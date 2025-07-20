@@ -24,7 +24,10 @@ function App() {
     if (!currentQuestion) return;
 
     if (questions) {
-      const history = [questions, ...(JSON.parse(localStorage.getItem("history")) || [])];
+      const history = [
+        questions,
+        ...(JSON.parse(localStorage.getItem("history")) || []),
+      ];
       localStorage.setItem("history", JSON.stringify(history));
       setRecentHistory(history);
     }
@@ -89,13 +92,21 @@ function App() {
         <div className="flex justify-between items-center p-2">
           <h1 className="text-white">Recent History</h1>
           <button onClick={clearHistory} className="cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="#e3e3e3" viewBox="0 -960 960 960">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20"
+              width="20"
+              fill="#e3e3e3"
+              viewBox="0 -960 960 960"
+            >
               <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
             </svg>
           </button>
         </div>
         <hr className="text-white" />
-        <ul className="text-left overflow-auto px-2">
+        {/* <ul className="text-left overflow-auto px-2"> */}
+
+        <ul className="h-screen overflow-y-auto scroll-hide text-left px-2">
           {recentHistory.map((item, index) => (
             <li
               key={index}
@@ -110,13 +121,31 @@ function App() {
 
       {/* Right Panel */}
       <div className="col-span-4 flex flex-col overflow-hidden">
-        <h1 className="text-white mt-3 text-2xl">Hello Rohit, Ask me Anything</h1>
+        <h1 className="text-white mt-3 text-2xl">
+          Hello Rohit, Ask me Anything
+        </h1>
 
         {loading && (
           <div role="status" className="mt-2">
-            <svg className="w-8 h-8 animate-spin text-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="10" className="opacity-25" />
-              <path d="M93 50a43 43 0 10-86 0 43 43 0 0086 0z" fill="currentColor" className="opacity-75" />
+            <svg
+              className="w-8 h-8 animate-spin text-blue-600"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                stroke="currentColor"
+                strokeWidth="10"
+                className="opacity-25"
+              />
+              <path
+                d="M93 50a43 43 0 10-86 0 43 43 0 0086 0z"
+                fill="currentColor"
+                className="opacity-75"
+              />
             </svg>
           </div>
         )}
@@ -124,15 +153,28 @@ function App() {
         <div ref={scrollToAns} className="flex-1 overflow-auto px-6 mt-4">
           <ul className="text-white space-y-2">
             {result.map((item, index) => (
-              <div key={index} className={item.type === "q" ? "flex justify-end" : ""}>
+              <div
+                key={index}
+                className={item.type === "q" ? "flex justify-end" : ""}
+              >
                 {item.type === "q" ? (
                   <li className="text-right border w-fit border-zinc-700 bg-zinc-700 rounded-bl-3xl rounded-tl-3xl rounded-br-3xl p-2">
-                    <Answer ans={item.text} totalResult={1} index={index} type={item.type} />
+                    <Answer
+                      ans={item.text}
+                      totalResult={1}
+                      index={index}
+                      type={item.type}
+                    />
                   </li>
                 ) : (
                   item.text.map((ansItem, ansIndex) => (
                     <li key={ansIndex} className="text-left p-1">
-                      <Answer ans={ansItem} totalResult={item.text.length} index={ansIndex} type={item.type} />
+                      <Answer
+                        ans={ansItem}
+                        totalResult={item.text.length}
+                        index={ansIndex}
+                        type={item.type}
+                      />
                     </li>
                   ))
                 )}
@@ -141,7 +183,7 @@ function App() {
           </ul>
         </div>
 
-        <div className="bg-zinc-700 text-white w-1/2 p-2 pr-5 mx-auto my-4 rounded-4xl border-amber-200 border flex">
+        <div className="bg-zinc-700 sticky  text-white w-1/2 p-1 pr-5 mx-auto my-12 rounded-4xl border-amber-200 border flex">
           <input
             type="text"
             className="w-full p-2 bg-transparent outline-none"
@@ -150,7 +192,9 @@ function App() {
             onChange={(e) => setQuestions(e.target.value)}
             placeholder="Ask me anything..."
           />
-          <button type="submit" onClick={handleAskQuestions} className="ml-2">Ask</button>
+          <button type="submit" onClick={handleAskQuestions} className="ml-2">
+            Ask
+          </button>
         </div>
       </div>
     </div>
@@ -158,8 +202,6 @@ function App() {
 }
 
 export default App;
-
-
 
 // import { useEffect, useRef, useState } from "react";
 // import reactLogo from "./assets/react.svg";
